@@ -24,7 +24,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AccountInfo {
-    pub has_update: Option<bool>,
+    pub has_update: bool,
 
     pub email: Option<String>,
 
@@ -33,16 +33,31 @@ pub struct AccountInfo {
     pub expires_on: Option<String>,
 }
 
-pub fn extract_email(line: String) -> String {
+pub fn extract_email(line: String) -> Option<String> {
     println!("{}", line);
 
-    let mut output = "".to_string();
+    let mut output: Option<String> = None;
 
-    let re = Regex::new(r"Email Address: (?P<mailid>[-A-Za-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-A-Za-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[A-Za-z0-9](?:[-A-Za-z0-9]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[-A-Za-z0-9]*[A-Za-z0-9])?)").unwrap();
+    let re = Regex::new(r"Email Address: (?P<email>[-A-Za-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-A-Za-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[A-Za-z0-9](?:[-A-Za-z0-9]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[-A-Za-z0-9]*[A-Za-z0-9])?)").unwrap();
 
     for caps in re.captures_iter(&line) {
-        println!("{:?}", &caps["mailid"]);
-        output = String::from(&caps["mailid"]);
+        println!("{:?}", &caps["email"]);
+        output = Some(String::from(&caps["email"]));
+    }
+
+    return output;
+}
+
+pub fn extract_update_status(line: String) -> bool {
+    println!("{}", line);
+
+    let mut output: bool = false;
+
+    let re = Regex::new(r"^.*new.*version.*available.*$").unwrap();
+
+    for caps in re.captures_iter(&line) {
+        println!("{:?}", &caps[0]);
+        output = true;
     }
 
     return output;
@@ -56,20 +71,32 @@ pub fn get_nordvpn_account_info() -> String {
     let nord_vpn_cli_account_output = nord_vpn_cli.output().expect("failed to execute process");
     let output_str: String = String::from_utf8(nord_vpn_cli_account_output.stdout).unwrap();
 
-    let json = r#"{
-    "hasUpdate": true,
-    "email": "hello@hello.com",
-    "vpnServiceStatus" : "Active",
-    "expiresOn": "May 30th, 2024"
-}"#;
-    let mut model: AccountInfo = serde_json::from_str(&json).unwrap();
+    //     let json = r#"{
+    //     "hasUpdate": true,
+    //     "email": "hello@hello.com",
+    //     "vpnServiceStatus" : "Active",
+    //     "expiresOn": "May 30th, 2024"
+    // }"#;
+    // let mut model: AccountInfo = serde_json::from_str(&json).unwrap();
+    let mut model: AccountInfo = AccountInfo {
+        has_update: false,
+        email: None,
+        vpn_service_status: None,
+        expires_on: None,
+    };
 
     // let return_str: String = "Hello".to_string();
 
     let parts = output_str.split("\n");
 
     for part in parts {
-        model.email = Some(extract_email(part.to_string()));
+        if model.has_update == false {
+            model.has_update = extract_update_status(part.to_string());
+        }
+
+        if model.email.is_none() {
+            model.email = extract_email(part.to_string());
+        }
 
         // for caps in re.captures_iter(part) {
         //     println!("{:?}", &caps["mailid"]);
