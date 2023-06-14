@@ -2,11 +2,16 @@
   import { invoke } from "@tauri-apps/api/tauri"
 
   let name = "";
-  let accountInfoOutput = "Empty"
+  let accountInfoOutput = {
+    x: 1,
+    y:2,
+    email: "p"
+  }
 
   async function getAccountInfo(){
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    accountInfoOutput = await invoke("get_nordvpn_account_info", {})
+    let res = await invoke("get_nordvpn_account_info", {})
+    accountInfoOutput = JSON.parse(JSON.parse(res));
   }
 </script>
 
@@ -15,4 +20,8 @@
     Get Account Info
   </button>
   <pre>{accountInfoOutput}</pre>
+  <div>{accountInfoOutput.hasUpdate}</div>
+  <pre>{accountInfoOutput.email}</pre>
+  <pre>{accountInfoOutput.vpnServiceStatus}</pre>
+  <pre>{accountInfoOutput.expiresOn}</pre>
 </div>

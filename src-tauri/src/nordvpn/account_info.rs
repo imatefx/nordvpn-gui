@@ -68,7 +68,7 @@ pub fn extract_expires_on(line: String) -> Option<String> {
 
     let mut output: Option<String> = None;
 
-    let re = Regex::new(r"VPN Service: (?P<status>[A-Za-z0-9]+) \((?P<expiry>[^)]*\))").unwrap();
+    let re = Regex::new(r"VPN Service: (?P<status>[A-Za-z0-9]+) \((?P<expiry>[^)]*)\)").unwrap();
 
     for caps in re.captures_iter(&line) {
         println!("{:?}", &caps["expiry"]);
@@ -142,7 +142,7 @@ pub fn get_nordvpn_account_info() -> String {
     // let collection = parts.collect::<Vec<&str>>();
     // dbg!(collection);
 
-    let j = serde_json::to_string(&model);
+    let json_stringify = serde_json::to_string(&model).unwrap();
 
-    format!("mailid: {:#?}", j.unwrap())
+    format!("{:#?}", json_stringify)
 }
