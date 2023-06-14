@@ -48,6 +48,36 @@ pub fn extract_email(line: String) -> Option<String> {
     return output;
 }
 
+pub fn extract_vpn_service_status(line: String) -> Option<String> {
+    println!("{}", line);
+
+    let mut output: Option<String> = None;
+
+    let re = Regex::new(r"VPN Service: (?P<status>[A-Za-z0-9]+) \((?P<expiry>[^)]*\))").unwrap();
+
+    for caps in re.captures_iter(&line) {
+        println!("{:?}", &caps["status"]);
+        output = Some(String::from(&caps["status"]));
+    }
+
+    return output;
+}
+
+pub fn extract_expires_on(line: String) -> Option<String> {
+    println!("{}", line);
+
+    let mut output: Option<String> = None;
+
+    let re = Regex::new(r"VPN Service: (?P<status>[A-Za-z0-9]+) \((?P<expiry>[^)]*\))").unwrap();
+
+    for caps in re.captures_iter(&line) {
+        println!("{:?}", &caps["expiry"]);
+        output = Some(String::from(&caps["expiry"]));
+    }
+
+    return output;
+}
+
 pub fn extract_update_status(line: String) -> bool {
     println!("{}", line);
 
@@ -90,6 +120,8 @@ pub fn get_nordvpn_account_info() -> String {
     let parts = output_str.split("\n");
 
     for part in parts {
+        println!("{}", part);
+
         if model.has_update == false {
             model.has_update = extract_update_status(part.to_string());
         }
@@ -98,10 +130,13 @@ pub fn get_nordvpn_account_info() -> String {
             model.email = extract_email(part.to_string());
         }
 
-        // for caps in re.captures_iter(part) {
-        //     println!("{:?}", &caps["mailid"]);
-        //     model.email = Some(String::from(&caps["mailid"]));
-        // }
+        if model.vpn_service_status.is_none() {
+            model.vpn_service_status = extract_vpn_service_status(part.to_string());
+        }
+
+        if model.expires_on.is_none() {
+            model.expires_on = extract_expires_on(part.to_string());
+        }
     }
 
     // let collection = parts.collect::<Vec<&str>>();
