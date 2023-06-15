@@ -1,57 +1,54 @@
 <script lang="ts">
+  import Tabs from "./lib/components/Tabs.svelte";
   import Greet from "./lib/Greet.svelte";
-  import AccountInfo from "./lib/AccountInfo.svelte";
-  import Countries from "./lib/Countries.svelte";
-  import Cities from "./lib/Cities.svelte";
-  import ConnectRandom from "./lib/ConnectRandom.svelte";
-  import Disconnect from "./lib/Disconnect.svelte";
+  import AccountInfoSection from "./lib/sections/AccountInfoSection.svelte";
+  import StatusSection from "./lib/sections/StatusSection.svelte";
+  import ConnectRandomServerSection from "./lib/sections/ConnectRandomServerSection.svelte";
+  import ConnectCountrySection from "./lib/sections/ConnectCountrySection.svelte";
+  import ConnectCitySection from "./lib/sections/ConnectCitySection.svelte";
+  import ConnectGroupSection from "./lib/sections/ConnectGroupSection.svelte";
+  import DisconnectServerSection from "./lib/sections/DisconnectServerSection.svelte";
+  import LogViewerSection from "./lib/sections/LogViewerSection.svelte";
 
-  let selectedCountry = {};
-  function onSelectedCountryChangedMessageHandler(event) {
-    selectedCountry = event.detail;
-    alert(event.detail.id);
+  let logs = [];
+  let refreshUnique = {};
+  function onConnectionChangeHandler(event) {
+    console.log(event.detail);
+    let str = new Date().toLocaleString().concat(" : ", event.detail.response);
+    logs.push(str);
+    refreshUnique = {};
   }
+
+  // List of tab items with labels, values and assigned components
+  let items = [
+    { label: "Random", value: 1, component: ConnectRandomServerSection },
+    { label: "Country", value: 2, component: ConnectCountrySection },
+    { label: "City", value: 3, component: ConnectCitySection },
+    { label: "Group", value: 4, component: ConnectGroupSection },
+  ];
 </script>
 
 <main class="container">
-  <h1>Welcome to Tauri!</h1>
+  <h1>NordVPN GUI for Linux</h1>
 
-  <div class="row">
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo vite" alt="Vite Logo" />
-    </a>
-    <a href="https://tauri.app" target="_blank">
-      <img src="/tauri.svg" class="logo tauri" alt="Tauri Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank">
-      <img src="/svelte.svg" class="logo svelte" alt="Svelte Logo" />
-    </a>
-  </div>
-
-  <p>Click on the Tauri, Vite, and Svelte logos to learn more.</p>
-
-  <div class="row">
-    <Greet />
-  </div>
-  <div style="text-align: left">
-    <AccountInfo />
-  </div>
-
-  <div style="text-align: left">
-    <Countries on:selectedCountryChanged={onSelectedCountryChangedMessageHandler}/>
-  </div>
-
-  <div style="text-align: left">
-    <Cities selectedCountry="{selectedCountry}" />
-  </div>
-
-  <div style="text-align: left">
-    <ConnectRandom />
-  </div>
-
-  <div style="text-align: left">
-    <Disconnect />
-  </div>
+  <AccountInfoSection />
+  <br />
+  {#key refreshUnique}
+  <StatusSection
+    on:SERVER_DISCONNECTION_ATTEMPTED="{onConnectionChangeHandler}"
+  />
+  {/key}
+  <!-- <ConnectRandomServerSection />
+  <ConnectCountrySection />
+  <ConnectCitySection />
+  <ConnectGroupSection /> -->
+  <Tabs {items} on:SERVER_CONNECTION_ATTEMPTED="{onConnectionChangeHandler}" />
+  <!-- <DisconnectServerSection
+    on:SERVER_DISCONNECTION_ATTEMPTED="{onConnectionChangeHandler}"
+  /> -->
+  {#key refreshUnique}
+  <LogViewerSection logs="{logs}" />
+  {/key}
 </main>
 
 <style>

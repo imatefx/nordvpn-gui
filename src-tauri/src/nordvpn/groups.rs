@@ -4,49 +4,47 @@ extern crate serde;
 
 use serde::{Deserialize, Serialize};
 
-pub type Cities = Vec<City>;
+pub type Groups = Vec<Group>;
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct City {
+pub struct Group {
     pub id: String,
 
     pub name: String,
 }
 
 #[tauri::command]
-pub fn get_nordvpn_cities(country: String) -> String {
+pub fn get_nordvpn_groups() -> String {
     let mut nord_vpn_cli = Command::new("nordvpn");
 
-    nord_vpn_cli.args(["cities", &country]);
+    nord_vpn_cli.args(["groups"]);
     let nord_vpn_cli_account_output = nord_vpn_cli.output().expect("failed to execute process");
     let output_str: String = String::from_utf8(nord_vpn_cli_account_output.stdout).unwrap();
-    let mut model: Cities = vec![];
 
-    let mut cities: Vec<&str> = [].to_vec();
+    let mut model: Groups = vec![];
+
+    let mut groups: Vec<&str> = [].to_vec();
 
     let parts: Vec<&str> = output_str.split(" \r").collect();
 
     let part_len = parts.len();
 
     if part_len == 3 {
-        cities = parts[2].split(",").collect();
+        groups = parts[2].split(",").collect();
     } else if part_len == 2 {
-        cities = parts[0].split(",").collect();
+        groups = parts[0].split(",").collect();
     }
 
-    for city in cities {
-        let val = &city.trim();
+    for group in groups {
+        let val = &group.trim();
 
-        let city: City = City {
+        let group: Group = Group {
             id: val.to_string(),
             name: val.to_string(),
         };
 
-        model.push(city)
+        model.push(group)
     }
-
-    // let collection = parts.collect::<Vec<&str>>();
-    // dbg!(collection);
 
     let json_stringify = serde_json::to_string(&model).unwrap();
 
