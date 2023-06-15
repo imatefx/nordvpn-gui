@@ -1,6 +1,9 @@
 <script lang="ts">
   import Greet from './lib/Greet.svelte'
   import AccountInfo from './lib/AccountInfo.svelte'
+  import Countries from './lib/Countries.svelte'
+  import ConnectRandom from './lib/ConnectRandom.svelte'
+  import Disconnect from './lib/Disconnect.svelte'
 </script>
 
 <main class="container">
@@ -27,6 +30,18 @@
   </div>
   <div style="text-align: left;">
     <AccountInfo />
+  </div>
+
+ <div style="text-align: left;">
+    <Countries />
+  </div>
+
+ <div style="text-align: left;">
+    <ConnectRandom />
+  </div>
+
+ <div style="text-align: left;">
+    <Disconnect />
   </div>
 
 

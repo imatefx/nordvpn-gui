@@ -3,6 +3,9 @@
 
 pub mod nordvpn;
 use crate::nordvpn::account_info::get_nordvpn_account_info;
+use crate::nordvpn::connect::nordvpn_connect_random;
+use crate::nordvpn::countries::get_nordvpn_countries;
+use crate::nordvpn::disconnect::nordvpn_disconnect;
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
@@ -12,8 +15,13 @@ fn greet(name: &str) -> String {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet])
-        .invoke_handler(tauri::generate_handler![get_nordvpn_account_info])
+        .invoke_handler(tauri::generate_handler![
+            greet,
+            get_nordvpn_account_info,
+            get_nordvpn_countries,
+            nordvpn_connect_random,
+            nordvpn_disconnect
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

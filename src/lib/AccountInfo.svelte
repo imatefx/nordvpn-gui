@@ -2,16 +2,13 @@
   import { invoke } from "@tauri-apps/api/tauri"
 
   let name = "";
-  let accountInfoOutput = {
-    x: 1,
-    y:2,
-    email: "p"
-  }
+  let accountInfoOutput = {}
 
   async function getAccountInfo(){
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
     let res = await invoke("get_nordvpn_account_info", {})
-    accountInfoOutput = JSON.parse(JSON.parse(res));
+    // accountInfoOutput = JSON.parse(JSON.parse(res));
+    accountInfoOutput = JSON.parse(res);
   }
 </script>
 
