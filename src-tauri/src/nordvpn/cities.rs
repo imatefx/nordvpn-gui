@@ -7,19 +7,19 @@ extern crate serde;
 // extern crate serde_derive;
 // extern crate serde_json;
 //
-// use generated_module::countries;
+// use generated_module::cities;
 //
 // fn main() {
 //     let json = r#"{"answer": 42}"#;
-//     let model: countries = serde_json::from_str(&json).unwrap();
+//     let model: cities = serde_json::from_str(&json).unwrap();
 // }
 
 use serde::{Deserialize, Serialize};
 
-pub type Countries = Vec<Country>;
+pub type Cities = Vec<City>;
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct Country {
+pub struct City {
     pub id: String,
 
     pub name: String,
@@ -41,38 +41,41 @@ pub fn is_update_status(line: String) -> bool {
 }
 
 #[tauri::command]
-pub fn get_nordvpn_countries() -> String {
+pub fn get_nordvpn_cities(country: String) -> String {
     let mut nord_vpn_cli = Command::new("nordvpn");
 
-    nord_vpn_cli.args(["countries"]);
+    nord_vpn_cli.args(["cities", &country]);
     let nord_vpn_cli_account_output = nord_vpn_cli.output().expect("failed to execute process");
     let output_str: String = String::from_utf8(nord_vpn_cli_account_output.stdout).unwrap();
+    let mut model: Cities = vec![];
 
-    let mut model: Countries = vec![];
-
-    let mut countries: Vec<&str> = [].to_vec();
+    let mut cities: Vec<&str> = [].to_vec();
 
     let parts: Vec<&str> = output_str.split(" \r").collect();
 
     let part_len = parts.len();
 
     if part_len == 3 {
-        countries = parts[2].split(",").collect();
+        cities = parts[2].split(",").collect();
     } else if part_len == 2 {
-        countries = parts[0].split(",").collect();
+        cities = parts[0].split(",").collect();
     }
 
-    for country in countries {
-        println!("{}", country);
+    for city in cities {
+        println!("{}", city);
 
-        let val = &country.trim();
+        let val = &city.trim();
 
-        let country: Country = Country {
+        let city: City = City {
             id: val.to_string(),
             name: val.to_string(),
         };
 
-        model.push(country)
+        model.push(city)
+
+        // if model.email.is_none() {
+        //     model.email = extract_email(part.to_string());
+        // }
     }
 
     // if is_update_status(model[0].id.clone()) {

@@ -3,6 +3,7 @@
 
 pub mod nordvpn;
 use crate::nordvpn::account_info::get_nordvpn_account_info;
+use crate::nordvpn::cities::get_nordvpn_cities;
 use crate::nordvpn::connect::nordvpn_connect_random;
 use crate::nordvpn::countries::get_nordvpn_countries;
 use crate::nordvpn::disconnect::nordvpn_disconnect;
@@ -19,8 +20,9 @@ fn main() {
             greet,
             get_nordvpn_account_info,
             get_nordvpn_countries,
+            get_nordvpn_cities,
             nordvpn_connect_random,
-            nordvpn_disconnect
+            nordvpn_disconnect,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

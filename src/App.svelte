@@ -1,9 +1,16 @@
 <script lang="ts">
-  import Greet from './lib/Greet.svelte'
-  import AccountInfo from './lib/AccountInfo.svelte'
-  import Countries from './lib/Countries.svelte'
-  import ConnectRandom from './lib/ConnectRandom.svelte'
-  import Disconnect from './lib/Disconnect.svelte'
+  import Greet from "./lib/Greet.svelte";
+  import AccountInfo from "./lib/AccountInfo.svelte";
+  import Countries from "./lib/Countries.svelte";
+  import Cities from "./lib/Cities.svelte";
+  import ConnectRandom from "./lib/ConnectRandom.svelte";
+  import Disconnect from "./lib/Disconnect.svelte";
+
+  let selectedCountry = {};
+  function onSelectedCountryChangedMessageHandler(event) {
+    selectedCountry = event.detail;
+    alert(event.detail.id);
+  }
 </script>
 
 <main class="container">
@@ -21,30 +28,30 @@
     </a>
   </div>
 
-  <p>
-    Click on the Tauri, Vite, and Svelte logos to learn more.
-  </p>
+  <p>Click on the Tauri, Vite, and Svelte logos to learn more.</p>
 
   <div class="row">
     <Greet />
   </div>
-  <div style="text-align: left;">
+  <div style="text-align: left">
     <AccountInfo />
   </div>
 
- <div style="text-align: left;">
-    <Countries />
+  <div style="text-align: left">
+    <Countries on:selectedCountryChanged={onSelectedCountryChangedMessageHandler}/>
   </div>
 
- <div style="text-align: left;">
+  <div style="text-align: left">
+    <Cities selectedCountry="{selectedCountry}" />
+  </div>
+
+  <div style="text-align: left">
     <ConnectRandom />
   </div>
 
- <div style="text-align: left;">
+  <div style="text-align: left">
     <Disconnect />
   </div>
-
-
 </main>
 
 <style>
