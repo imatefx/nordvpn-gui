@@ -37,10 +37,10 @@ To install the NordVPN GUI, follow these steps:
 Use the Latest bundles
 
 ### AppImage
-https://github.com/imatefx/nordvpn-gui/releases/download/v0.0.0/nordvpn-gui_0.0.0_amd64.AppImage
+https://github.com/imatefx/nordvpn-gui/releases/download/v1.0.0/nordvpn-gui_1.0.0_amd64.AppImage
 
 ### DEB
-https://github.com/imatefx/nordvpn-gui/releases/download/v0.0.0/nordvpn-gui_0.0.0_amd64.deb
+https://github.com/imatefx/nordvpn-gui/releases/download/v1.0.0/nordvpn-gui_1.0.0_amd64.deb
 
 Or
 
