@@ -28,7 +28,7 @@
     </tr>
   </table>
 </div>
-{#if accountInfoOutput} {/if}
+<!-- {#if accountInfoOutput} {/if} -->
 
 <style>
     table{
@@ -53,6 +53,4 @@ td{
     line-height: 2;
      padding: 15px;
 }
-
-
 </style>

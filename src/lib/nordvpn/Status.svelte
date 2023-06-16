@@ -66,7 +66,7 @@
     </tr>
   </table>
 </div>
-{#if statusOutput} {/if}
+<!-- {#if statusOutput} {/if} -->
 <style>
     table{
     width: 100%;
@@ -90,6 +90,5 @@ td{
     line-height: 2;
      padding: 15px;
 }
-
 
 </style>

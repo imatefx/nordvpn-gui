@@ -25,8 +25,8 @@
  let accountSectionItems = [
     { label: "Connection Info", value: 1, component: StatusSection },
     { label: "Connect", value: 2, component: ConnectTabSection },
-    { label: "System Info", value: 3, component: SystemInfoSection },
     { label: "Account Info", value: 4, component: AccountInfoSection },
+    { label: "System Info", value: 3, component: SystemInfoSection },
     { label: "Login with browser", value: 5, component: LoginWithBrowser },
     { label: "Login with Token", value: 6, component: LoginWithToken },
     { label: "Logout", value: 7, component: Logout },

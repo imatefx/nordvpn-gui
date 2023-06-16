@@ -5,7 +5,7 @@
   let output = false;
 
   async function getCliPath() {
-    let res = await invoke("nordvpn_cli_path", {});
+    let res = await invoke("nordvpn_version", {});
     output = res;
   }
 
