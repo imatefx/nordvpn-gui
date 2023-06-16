@@ -35,10 +35,11 @@ The NordVPN GUI for Linux is built using the following technologies:
 To install the NordVPN GUI, follow these steps:
 
 Use the Latest bundles
-AppImage
+
+### AppImage
 https://github.com/imatefx/nordvpn-gui/releases/download/v0.0.0/nordvpn-gui_0.0.0_amd64.AppImage
 
-DEB
+### DEB
 https://github.com/imatefx/nordvpn-gui/releases/download/v0.0.0/nordvpn-gui_0.0.0_amd64.deb
 
 Or
