@@ -1,8 +1,7 @@
 <script lang="ts">
   import { invoke } from "@tauri-apps/api/tauri";
   import { createEventDispatcher } from "svelte";
-    import { onMount } from 'svelte';
-  
+  import { onMount } from "svelte";
 
   let countries = [];
   let selectedCountry = {};
@@ -19,10 +18,9 @@
     countries = JSON.parse(JSON.parse(res));
   }
 
-    onMount(async () => {
+  onMount(async () => {
     await getListOfCountries();
   });
-
 </script>
 
 <div>

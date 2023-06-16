@@ -1,7 +1,11 @@
 pub mod account_info;
 pub mod cities;
+pub mod cli;
 pub mod connect;
 pub mod countries;
 pub mod disconnect;
 pub mod groups;
+pub mod login;
+pub mod logout;
 pub mod status;
+pub mod version;

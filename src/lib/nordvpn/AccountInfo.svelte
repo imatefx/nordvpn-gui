@@ -29,3 +29,30 @@
   </table>
 </div>
 {#if accountInfoOutput} {/if}
+
+<style>
+    table{
+    width: 100%;
+    border-collapse:collapse;
+    table-layout: fixed;
+    border: 1px solid black;
+}
+
+th{
+    width: 50%;
+    text-align: center;
+    border: 1px solid black;
+    line-height: 2;
+     padding: 15px;
+}
+
+td{
+    width: 50%;
+    text-align: center;
+    border: 1px solid black;
+    line-height: 2;
+     padding: 15px;
+}
+
+
+</style>
