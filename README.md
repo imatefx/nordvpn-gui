@@ -15,6 +15,13 @@ The NordVPN CLI is a powerful tool that allows users to control their VPN connec
 - **TODO: Advanced Settings:** The GUI provides access to advanced settings offered by the NordVPN CLI, such as enabling or disabling the kill switch, managing custom DNS settings, and configuring auto-connect options.
 - **TODO: Favorites and Recent Servers:** Users can conveniently bookmark their favorite servers and quickly access recently used servers for enhanced usability.
 
+## Screenshots
+![2023-06-16-16-09-PM](https://github.com/imatefx/nordvpn-gui/assets/3025904/f42fdf92-6568-4931-8908-1282e590ef3e)
+![2023-06-16-16-06-PM](https://github.com/imatefx/nordvpn-gui/assets/3025904/7abc7a42-364d-4df5-aada-52573ba52253)
+![2023-06-16-16-04-PM](https://github.com/imatefx/nordvpn-gui/assets/3025904/220dcd53-f136-4022-9d7a-935bac7f9939)
+![2023-06-16-16-00-PM](https://github.com/imatefx/nordvpn-gui/assets/3025904/306853af-37de-4aab-a155-2b52451a6940)
+
+
 ## Technology Stack
 
 The NordVPN GUI for Linux is built using the following technologies:
